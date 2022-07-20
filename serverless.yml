@@ -4,6 +4,16 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: nodejs14.x
+  stage: dev
+  region: us-east-1
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: 
+          - "dynamodb:*"
+          Resource: "*"
+
 
 functions:
   hello:
@@ -12,3 +22,27 @@ functions:
       - httpApi:
           path: /
           method: get
+  
+  addNote:
+    handler: src/notes/addNote.js
+    events:
+      - httpApi:
+          path: /note
+          method: post
+
+
+
+resources:
+  Resources:
+    NotesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: notes
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+       
