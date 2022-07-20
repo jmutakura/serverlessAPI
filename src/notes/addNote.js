@@ -44,4 +44,6 @@ const addNote = async (event) => {
 	};
 };
 
-module.exports = addNote;
+module.exports = {
+	handler: addNote,
+};
