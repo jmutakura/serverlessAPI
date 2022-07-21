@@ -25,7 +25,7 @@ functions:
       - httpApi:
           path: /
           method: get
-  
+          
   addNote:
     handler: src/notes/addNote.handler
     events:
